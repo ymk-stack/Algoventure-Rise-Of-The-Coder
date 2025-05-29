@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Algoventure Rise Of The Coder</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+        #unity-container { 
+            position: absolute;
+            width: 100%; 
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #unity-canvas { 
+            background: #000;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        #unity-loading-bar {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 16px;
+            margin-top: 50px;
+        }
+        .unity-progress-bar-empty {
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+        }
+        .unity-progress-bar-full {
+            width: 0%;
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 8px;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="unity-container">
+        <canvas id="unity-canvas"></canvas>
+        <div id="unity-loading-bar">
+            <div class="unity-progress-bar-empty">
+                <div class="unity-progress-bar-full"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var container = document.querySelector("#unity-container");
+        var canvas = document.querySelector("#unity-canvas");
+        var loadingBar = document.querySelector("#unity-loading-bar");
+        var progressBarFull = document.querySelector(".unity-progress-bar-full");
+
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/Algoventure Rise Of The Coder.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/Algoventure Rise Of The Coder.data",
+            frameworkUrl: buildUrl + "/Algoventure Rise Of The Coder.framework.js",
+            codeUrl: buildUrl + "/Algoventure Rise Of The Coder.wasm",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "Babylana12",
+            productName: "Algoventure Rise Of The Coder",
+            productVersion: "1.0",
+        };
+
+        var script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = 100 * progress + "%";
+            }).then((unityInstance) => {
+                loadingBar.style.display = "none";
+                
+                // Auto-resize canvas
+                function resizeCanvas() {
+                    var container = canvas.parentElement;
+                    var w = container.clientWidth;
+                    var h = container.clientHeight;
+                    var r = Math.min(w / 1920, h / 1080);
+                    canvas.style.width = (1920 * r) + "px";
+                    canvas.style.height = (1080 * r) + "px";
+                }
+                
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+                
+            }).catch((message) => {
+                alert("Failed to load game: " + message);
+            });
+        };
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
