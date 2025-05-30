@@ -10,7 +10,7 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #000000;
+    background: #000000;  /* Background hitam */
     overflow: hidden;
 }
         
@@ -33,7 +33,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #000000; 
+    background: #000000;  /* Background hitam solid */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,7 +42,7 @@
 }
 
 #splash-logo {
-    width: 500px;
+    width: 500px;  /* Sesuaikan ukuran logo */
     height: auto;
     margin-bottom: 50px;
     animation: pulse 2s infinite;
@@ -152,12 +152,12 @@
     <script>
         // Loading messages
         const loadingMessages = [
-           "Menginisialisasi mesin permainan...",
-            "Memuat aset permainan...",
-            "Menyiapkan grafik...",
-            "Menyiapkan audio...",
-            "Menghubungkan logika permainan...",
-            "Hampir siap dimainkan!"
+            "Initializing game engine...",
+            "Loading game assets...",
+            "Preparing graphics...",
+            "Setting up audio...",
+            "Connecting game logic...",
+            "Almost ready to play!"
         ];
         
         let messageIndex = 0;
@@ -202,7 +202,7 @@
         script.onload = () => {
             createUnityInstance(canvas, config, updateProgress).then((unityInstance) => {
                 // Game loaded successfully
-                loadingText.textContent = "Game Siap!";
+                loadingText.textContent = "Game Ready!";
                 updateProgress(1);
                 
                 setTimeout(() => {
@@ -244,7 +244,7 @@
         
         script.onerror = () => {
             loadingText.textContent = "Failed to load game engine";
-            progressText.textContent = "Please refresh the page / F5";
+            progressText.textContent = "Please refresh the page";
         };
         
         document.body.appendChild(script);
